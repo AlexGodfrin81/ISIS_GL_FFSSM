@@ -18,6 +18,8 @@ public class Plongee {
 	public int profondeur;
 
 	public int duree;
+        
+        public Set<Plongeur> mesPlongeurs = new HashSet<Plongeur>();
 
 	public Plongee(Site lieu, Moniteur chefDePalanquee, LocalDate date, int profondeur, int duree) {
 		this.lieu = lieu;
@@ -28,8 +30,9 @@ public class Plongee {
 	}
 
 	public void ajouteParticipant(Plongeur participant) {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		if (!mesPlongeurs.contains(participant)){
+                    mesPlongeurs.add(participant);
+                }
 	}
 
 	public LocalDate getDate() {
@@ -43,8 +46,14 @@ public class Plongee {
 	 * @return vrai si la plongée est conforme
 	 */
 	public boolean estConforme() {
-		// TODO: Implémenter cette méthode
-		throw new UnsupportedOperationException("Pas encore implémenté");
+		boolean estConf = true;
+                for (Plongeur p : mesPlongeurs){
+                    int last = p.mesLicences.size()-1;
+                    if (!p.mesLicences.get(last).estValide(this.getDate())){
+                        estConf = false;
+                    }
+                }
+                return estConf;
+                
 	}
-
 }
